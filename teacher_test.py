@@ -82,6 +82,7 @@ class TestTeacher:
         teacher.create_quiz('math', 'quiz1', questions)
         questions = {'1 + 1?': {'1': False, '2': True, '3': False}}
         teacher.create_quiz('science', 'quiz1', questions)
+        print(teacher.get_quizzes())
         assert len(teacher.get_quizzes()) == 2
 
     def test_teacher_assign_quiz(self):
@@ -123,4 +124,4 @@ class TestTeacher:
         teacher.add_class('math')
         teacher.create_quiz('math', 'quiz1', questions)
         student = Student()
-        assert teacher.assign_quiz(student, 'math', 'quiz1')
+        assert not teacher.assign_quiz(student, 'math', 'quiz1')
