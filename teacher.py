@@ -28,17 +28,18 @@ class Teacher(Person):
 
     def assign_quiz(self, student, class_name, quiz_name):
         """Assign, previously saved, a quiz to a student"""
-        quiz = self.quizzes["%s_%s" % (class_name, quiz_name)]
+        quiz = self.quizzes["%s_%s" % (class_name, quiz_name)].copy()
         if self.teaches(student) and quiz:
             return student.add_quiz(quiz)
         return False
 
     def grade(self, student, quiz):
         """Grade a test and save the result"""
-        if self.teaches(student) and 'response' in quiz:
+        if self.teaches(
+                student) and 'response' in quiz and quiz['class_name'] in student.get_classes():
             # For simplicity every question has the same value in points, and every quiz is valued
             # @ 100 points
-            points_per_question = 100.0 / len(quiz)
+            points_per_question = 100.0 / len(quiz['questions'])
             total = 0
             for question in quiz['questions'].keys():
                 response = quiz['response'][question]
@@ -50,5 +51,18 @@ class Teacher(Person):
                 if correct:
                     total += points_per_question
             quiz['total'] = total
+            if not student.get_name() in self.grades:
+                self.grades[student.get_name()] = {'quizzes': {}}
+            quiz_key = "%s_%s" % (quiz['class_name'], quiz['quiz_name'])
+            self.grades[student.get_name()]['quizzes'][quiz_key] = quiz
+            return total
+        return False
+
+    def total(self, student_name, class_name):
+        """Gets the total for a student in a class"""
+        if student_name in self.grades and 'quizzes' in self.grades[student_name]:
+            total = 0
+            for quiz in self.grades[student_name]['quizzes'].values():
+                total += quiz['total']
             return total
         return False
