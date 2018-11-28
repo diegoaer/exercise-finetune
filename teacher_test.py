@@ -60,7 +60,7 @@ class TestTeacher:
         teacher = Teacher()
         teacher.add_class('math')
         questions = {'1 + 1?': {'1': False, '2': False, '3': False}}
-        assert teacher.create_quiz('math', 'quiz1', questions)
+        assert not teacher.create_quiz('math', 'quiz1', questions)
 
     def test_teacher_create_quizzes(self):
         """Tests if a teacher can create multiple quizzes"""
