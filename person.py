@@ -3,6 +3,7 @@ class Person:
 
     def __init__(self):
         self.classes = []
+        self.quizzes = {}
 
     def add_class(self, class_name):
         """Adds a single class to the person"""
@@ -17,3 +18,7 @@ class Person:
     def get_classes(self):
         """Returns the classes for a person"""
         return self.classes
+
+    def get_quizzes(self):
+        """Returns the quizzes for a person"""
+        return self.quizzes.values()
