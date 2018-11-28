@@ -125,3 +125,52 @@ class TestTeacher:
         teacher.create_quiz('math', 'quiz1', questions)
         student = Student()
         assert not teacher.assign_quiz(student, 'math', 'quiz1')
+
+    def test_teacher_grade_quiz(self):
+        """Tests if a teacher quiz can be graded"""
+        teacher = Teacher()
+        questions = {
+            '1 + 1?': {
+                '1': False,
+                '2': True,
+                '3': False
+            },
+            'name?': {
+                'my name': True,
+                'your name': True,
+                'no name': False
+            }
+        }
+        teacher.add_class('math')
+        teacher.create_quiz('math', 'quiz1', questions)
+        student = Student()
+        student.add_class('math')
+        teacher.assign_quiz(student, 'math', 'quiz1')
+        student.submit_answer('math', 'quiz1', 0, 0)
+        student.submit_answer('math', 'quiz1', 0, [1, 2])
+        assert teacher.grade(student, student.get_quiz('math', 'quiz1'))
+
+    def test_teacher_compute_total(self):
+        """Tests if a teacher can compute the total for a student"""
+        teacher = Teacher()
+        questions = {
+            '1 + 1?': {
+                '1': False,
+                '2': True,
+                '3': False
+            },
+            'name?': {
+                'my name': True,
+                'your name': True,
+                'no name': False
+            }
+        }
+        teacher.add_class('math')
+        teacher.create_quiz('math', 'quiz1', questions)
+        student = Student('Sam')
+        student.add_class('math')
+        teacher.assign_quiz(student, 'math', 'quiz1')
+        student.submit_answer('math', 'quiz1', 0, 0)
+        student.submit_answer('math', 'quiz1', 0, [1, 2])
+        teacher.grade(student, student.get_quiz('math', 'quiz1'))
+        assert teacher.total(student.get_name()) == 50
