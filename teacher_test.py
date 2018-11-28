@@ -146,8 +146,8 @@ class TestTeacher:
         student = Student()
         student.add_class('math')
         teacher.assign_quiz(student, 'math', 'quiz1')
-        student.submit_answer('math', 'quiz1', 0, 0)
-        student.submit_answer('math', 'quiz1', 0, [1, 2])
+        student.submit_answer('math', 'quiz1', '1 + 1?', '1')
+        student.submit_answer('math', 'quiz1', 'name?', ['my name', 'your name'])
         assert teacher.grade(student, student.get_quiz('math', 'quiz1'))
 
     def test_teacher_compute_total(self):
@@ -170,7 +170,7 @@ class TestTeacher:
         student = Student('Sam')
         student.add_class('math')
         teacher.assign_quiz(student, 'math', 'quiz1')
-        student.submit_answer('math', 'quiz1', 0, 0)
-        student.submit_answer('math', 'quiz1', 0, [1, 2])
+        student.submit_answer('math', 'quiz1', '1 + 1?', '1')
+        student.submit_answer('math', 'quiz1', 'name?', ['my name', 'your name'])
         teacher.grade(student, student.get_quiz('math', 'quiz1'))
         assert teacher.total(student.get_name()) == 50

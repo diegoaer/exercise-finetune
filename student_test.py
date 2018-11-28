@@ -40,5 +40,9 @@ class TestStudent:
         student = Student()
         student.add_class('math')
         teacher.assign_quiz(student, 'math', 'quiz1')
-        assert student.submit_answer('math', 'quiz1', 0, 0) and student.submit_answer(
-            'math', 'quiz1', 0, [1, 2])
+        assert (student.submit_answer('math', 'quiz1', '1 + 1?', '1')
+                and student.submit_answer('math', 'quiz1', 'name?', ['my name', 'your name'])
+                and student.quizzes['math_quiz1']['response'] == {
+                    '1 + 1?': '1',
+                    'name?': ['my name', 'your name']
+                })

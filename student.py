@@ -17,6 +17,6 @@ class Student(Person):
             if quiz:
                 if not 'response' in quiz:
                     quiz['response'] = {}
-                quiz['response']['question'] = answer
+                quiz['response'][question] = answer
                 return True
         return False
