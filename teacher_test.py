@@ -82,7 +82,6 @@ class TestTeacher:
         teacher.create_quiz('math', 'quiz1', questions)
         questions = {'1 + 1?': {'1': False, '2': True, '3': False}}
         teacher.create_quiz('science', 'quiz1', questions)
-        print(teacher.get_quizzes())
         assert len(teacher.get_quizzes()) == 2
 
     def test_teacher_assign_quiz(self):
@@ -166,11 +165,17 @@ class TestTeacher:
             }
         }
         teacher.add_class('math')
+        teacher.add_class('science')
         teacher.create_quiz('math', 'quiz1', questions)
+        teacher.create_quiz('science', 'quiz1', questions)
         student = Student('Sam')
         student.add_class('math')
+        student.add_class('science')
         teacher.assign_quiz(student, 'math', 'quiz1')
         student.submit_answer('math', 'quiz1', '1 + 1?', '1')
         student.submit_answer('math', 'quiz1', 'name?', ['my name', 'your name'])
+        teacher.assign_quiz(student, 'science', 'quiz1')
+        student.submit_answer('science', 'quiz1', '1 + 1?', '1')
+        student.submit_answer('science', 'quiz1', 'name?', ['my name', 'your name'])
         teacher.grade(student, student.get_quiz('math', 'quiz1'))
-        assert teacher.total(student.get_name()) == 50
+        assert teacher.total(student.get_name(), 'math') == 50
