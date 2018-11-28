@@ -20,3 +20,7 @@ class Student(Person):
                 quiz['response'][question] = answer
                 return True
         return False
+
+    def get_quiz(self, class_name, quiz_name):
+        """Returns the required quiz"""
+        return self.quizzes["%s_%s" % (class_name, quiz_name)]

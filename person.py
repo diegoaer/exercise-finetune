@@ -1,7 +1,8 @@
 class Person:
     """Parent class for a teacher/student"""
 
-    def __init__(self):
+    def __init__(self, name=''):
+        self.name = name
         self.classes = []
         self.quizzes = {}
 
@@ -22,3 +23,7 @@ class Person:
     def get_quizzes(self):
         """Returns the quizzes for a person"""
         return self.quizzes.values()
+
+    def get_name(self):
+        """Returns the name of a person"""
+        return self.name
