@@ -13,3 +13,7 @@ class Person:
     def has_class(self, class_name):
         """Checks if a person has a class"""
         return class_name in self.classes
+
+    def get_classes(self):
+        """Returns the classes for a person"""
+        return self.classes
